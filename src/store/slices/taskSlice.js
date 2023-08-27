@@ -10,7 +10,19 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState: [],
   reducers: {
-    // Your existing reducers...
+    addTask: (state, action) => {
+      state.push(action.payload);
+    },
+    deleteTask: (state, action) => {
+      return state.filter((task) => task.id !== action.payload);
+    },
+    updateTask: (state, action) => {
+      const { id, updatedTask } = action.payload;
+      const taskIndex = state.findIndex((task) => task.id === id);
+      if (taskIndex !== -1) {
+        state[taskIndex] = updatedTask;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTasks.fulfilled, (state, action) => {
@@ -18,5 +30,5 @@ const taskSlice = createSlice({
     });
   },
 });
-
+export const { addTask, deleteTask, updateTask } = taskSlice.actions;
 export default taskSlice.reducer;
