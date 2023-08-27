@@ -11,6 +11,7 @@ const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskCompleted, setNewTaskCompleted] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -19,9 +20,14 @@ const TaskList = () => {
   const handleAddTask = () => {
     if (newTaskTitle.trim() !== "") {
       dispatch(
-        addTask({ id: Date.now(), title: newTaskTitle, completed: false })
+        addTask({
+          id: Date.now(),
+          title: newTaskTitle,
+          completed: newTaskCompleted,
+        })
       );
       setNewTaskTitle("");
+      setNewTaskCompleted(false);
     }
   };
 
@@ -45,11 +51,21 @@ const TaskList = () => {
         onChange={(e) => setNewTaskTitle(e.target.value)}
         placeholder="Enter new task title"
       />
+      <label>
+        Completed:
+        <input
+          type="checkbox"
+          checked={newTaskCompleted}
+          onChange={(e) => setNewTaskCompleted(e.target.checked)}
+        />
+      </label>
       <button onClick={handleAddTask}>Add Task</button>
+      <hr />
       <ul>
         {tasks.map((task) => (
           <li key={task.id}>
             {task.title}
+            {task.completed ? " ✅︎" : " ❌"}
             <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
           </li>
         ))}

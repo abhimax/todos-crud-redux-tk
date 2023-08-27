@@ -9,3 +9,6 @@
   margin-left: 0.5rem;
   margin-bottom: 5px;
 }
+.task-container label {
+  margin-left: 0.5rem;
+}
