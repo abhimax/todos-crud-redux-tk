@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTasks, addTask, deleteTask } from "../store/slices/taskSlice";
+import {
+  fetchTasks,
+  addTask,
+  deleteTask,
+  clearAllTasks,
+} from "../store/slices/taskSlice";
 
 const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -24,9 +29,16 @@ const TaskList = () => {
     dispatch(deleteTask(taskId));
   };
 
+  const handleClearAllTasks = () => {
+    dispatch(clearAllTasks());
+  };
+
   return (
     <div className="task-container">
-      <h2>Task List</h2>
+      <h2>
+        Task List
+        <button onClick={handleClearAllTasks}>Clear All Tasks</button>
+      </h2>
       <input
         type="text"
         value={newTaskTitle}

@@ -23,6 +23,9 @@ const taskSlice = createSlice({
         state[taskIndex] = updatedTask;
       }
     },
+    clearAllTasks: (state) => {
+      state.length = 0;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTasks.fulfilled, (state, action) => {
@@ -30,5 +33,6 @@ const taskSlice = createSlice({
     });
   },
 });
-export const { addTask, deleteTask, updateTask } = taskSlice.actions;
+export const { addTask, deleteTask, updateTask, clearAllTasks } =
+  taskSlice.actions;
 export default taskSlice.reducer;
